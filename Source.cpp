@@ -3,12 +3,15 @@
 
 int main(void)
 {
-	Vector<int> object;
+	Vector<char> object;
 	object.insert(1);
 	object.insert(2);
 	object.insert(3);
 	object.insert(4);
 	object.insert(1, 2, 5);
+	object.show();
+	std::cout << "\n";
+	object.swap();
 	object.show();
 	std::cout << std::endl;
 	system("pause");

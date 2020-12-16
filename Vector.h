@@ -1,6 +1,3 @@
-#ifndef VECTOR_H
-#define VECTOR_H
-
 template <typename variableType>
 class Vector
 {
@@ -27,34 +24,8 @@ public:
 		return length;
 	}
 
-	//Изменяет длину массива до Pos элементов. Лишние элементы удаляются, а новые задаются стандартным значением.
-	void resize(short pos)
-	{
-		if (pos != length)
-		{
-			variableType* p_buffer_arr = new variableType[pos];
-			if (pos < length)
-			{
-				for (short i(0); i < pos; i++)
-				{
-					p_buffer_arr[i] = p_arr[i];
-				}
-			}
-			else
-			{
-				for (short i(0); i < length; i++)
-				{
-					p_buffer_arr[i] = p_arr[i];
-				}
-			}
-			length = pos;
-			delete[] p_arr;
-			p_arr = p_buffer_arr;
-		}
-	}
-
 	//Изменяет длину массива до Pos элементов. Заменяет пустые элементы на значение Value.
-	void resize(int pos, variableType value)
+	void resize(short pos, variableType value = variableType())
 	{
 		if (pos != length)
 		{
@@ -190,10 +161,36 @@ public:
 		p_arr = p_buffer_arr;
 	}
 
-	//Служит для сортировки элементов массива.
+	//Служит для сортировки элементов массива. Выбрана нетрудная и экономичная сортировка выбором.
 	void swap()
 	{
-		//still empty
+		if (typeid(variableType) != typeid(char))
+		{
+			unsigned short M;
+			unsigned short temp;
+			for (unsigned short i(0); i < length; i++)
+			{
+				M = i;
+				for (unsigned short j(i + 1); j < length; j++)
+				{
+					if (p_arr[j] < p_arr[M])
+					{
+						M = j;
+					}
+				}
+				if (M != i)
+				{
+					temp = p_arr[i];
+					p_arr[i] = p_arr[M];
+					p_arr[M] = temp;
+				}
+			}
+		}
+		else
+		{
+			setlocale(LC_ALL, "russian");
+			std::cout << "Метод swap не может работать с символьными типами данных.\n\a";
+		}
 	}
 
 	//Демонстрирует все элементы массива.(!!ВРЕМЕННЫЙ - ПОТОМ УДАЛИТЬ!!)
@@ -205,4 +202,3 @@ public:
 		}
 	}
 };
-#endif
