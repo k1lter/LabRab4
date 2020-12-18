@@ -164,7 +164,7 @@ public:
 	//Служит для сортировки элементов массива. Выбрана нетрудная и экономичная сортировка выбором.
 	void swap()
 	{
-		if (typeid(variableType) != typeid(char))
+		if (typeid(variableType) != typeid(char) && typeid(variableType) != typeid(bool))
 		{
 			unsigned short M;
 			unsigned short temp;

@@ -3,10 +3,10 @@
 
 int main(void)
 {
-	Vector<char> object;
-	object.insert(1);
+	Vector<int> object;
+	object.insert(1.1f);
 	object.insert(2);
-	object.insert(3);
+	object.insert(3.2f);
 	object.insert(4);
 	object.insert(1, 2, 5);
 	object.show();
