@@ -1,4 +1,5 @@
-﻿template <typename variableType>
+﻿#include <initializer_list>
+template <typename variableType>
 class Vector
 {
 private:
@@ -11,6 +12,36 @@ private:
 	unsigned short length = 0;
 	variableType* p_arr = new variableType[length];
 public:
+
+	//Конструктор по умолчанию.
+	Vector()
+	{
+
+	}
+
+	//Конструктор для ввода одного элемента.
+	Vector(variableType value)
+	{
+		length = 1;
+		variableType* p_buff_arr = new variableType[length];
+		p_buff_arr[0] = value;
+		delete[] p_arr;
+		p_arr = p_buff_arr;
+	}
+
+	//Конструктор для ввода списка аргументов.
+	Vector(std::initializer_list<variableType> value)
+	{
+		int* arrValue = new int[value.size()];
+		length = value.size();
+		variableType* p_buff_arr = new variableType[length];
+		for (unsigned short step(0); step < length; step++)
+		{
+			p_buff_arr[step] = *(value.begin() + step);
+		}
+		delete[] p_arr;
+		p_arr = p_buff_arr;
+	}
 
 	//Деструктор
 	~Vector()
@@ -102,7 +133,7 @@ public:
 		p_arr = p_buffer_arr;
 	}
 
-	//Добавляет Elem элементов в массив начиная с Pos_Start со значением Value. 
+	//Добавляет Elem элементов в массив начиная с Pos_Start со значением Value.
 	void insert(short pos_start, short elem, variableType value)
 	{
 		length += elem;
@@ -156,9 +187,8 @@ public:
 	void clear()
 	{
 		length = 0;
-		variableType* p_buffer_arr = new variableType[length];
 		delete[] p_arr;
-		p_arr = p_buffer_arr;
+		p_arr = nullptr;
 	}
 
 	//Служит для сортировки элементов массива. Выбрана нетрудная и экономичная сортировка выбором.
@@ -198,7 +228,7 @@ public:
 	{
 		for (short i(0); i < length; i++)
 		{
-			std::cout << p_arr[i];
+			std::cout << p_arr[i] << " ";
 		}
 	}
 };
