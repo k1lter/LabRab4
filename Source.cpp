@@ -1,13 +1,11 @@
 #include <iostream>
 #include "Vector.h"
+#include <ctime>
 
 int main(void)
 {
-	Vector<int> object({ 2,2,5,1,3,6,1,7 });
-	object.insert(1);
-	object.insert(2);
-	object.insert(3);
-	object.insert(4);
+	double start = clock();
+	Vector<int> object(1);
 	object.insert(1, 2, 5);
 	object.show();
 	std::cout << "\n";
@@ -15,6 +13,7 @@ int main(void)
 	object.swap();
 	object.show();
 	std::cout << std::endl;
+	printf("Seconds = %.4lf\n", (clock() - start) / CLOCKS_PER_SEC);
 	system("pause");
 	return 0;
 }

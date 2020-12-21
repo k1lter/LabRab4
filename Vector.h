@@ -10,6 +10,7 @@ private:
 	};
 
 	unsigned short length = 0;
+	unsigned int counter = 0;
 	variableType* p_arr = new variableType[length];
 public:
 
@@ -32,7 +33,6 @@ public:
 	//Конструктор для ввода списка аргументов.
 	Vector(std::initializer_list<variableType> value)
 	{
-		int* arrValue = new int[value.size()];
 		length = value.size();
 		variableType* p_buff_arr = new variableType[length];
 		for (unsigned short step(0); step < length; step++)
@@ -63,20 +63,20 @@ public:
 			variableType* p_buffer_arr = new variableType[pos];
 			if (pos < length)
 			{
-				for (short i(0); i < pos; i++)
+				for (short step(0); step < pos; step++)
 				{
-					p_buffer_arr[i] = p_arr[i];
+					p_buffer_arr[step] = p_arr[step];
 				}
 			}
 			else
 			{
-				for (short i(0); i < length; i++)
+				for (short step(0); step < length; step++)
 				{
-					p_buffer_arr[i] = p_arr[i];
+					p_buffer_arr[step] = p_arr[step];
 				}
-				for (short i(length); i < pos; i++)
+				for (short step(length); step < pos; step++)
 				{
-					p_buffer_arr[i] = value;
+					p_buffer_arr[step] = value;
 				}
 			}
 			length = pos;
@@ -97,9 +97,9 @@ public:
 	{
 		length++;
 		variableType* p_buffer_arr = new variableType[length];
-		for (short i(0); i < length-1; i++)
+		for (short step(0); step < length-1; step++)
 		{
-			p_buffer_arr[i] = p_arr[i];
+			p_buffer_arr[step] = p_arr[step];
 		}
 		p_buffer_arr[length - 1] = value;
 		delete[] p_arr;
@@ -111,9 +111,9 @@ public:
 	{
 		length--;
 		variableType* p_buffer_arr = new variableType[length];
-		for (short i(0); i < length; i++)
+		for (short step(0); step < length; step++)
 		{
-			p_buffer_arr[i] = p_arr[i];
+			p_buffer_arr[step] = p_arr[step];
 		}
 		delete[] p_arr;
 		p_arr = p_buffer_arr;
@@ -125,9 +125,9 @@ public:
 		length++;
 		variableType* p_buffer_arr = new variableType[length];
 		p_buffer_arr[0] = value;
-		for (short i(1); i < length; i++)
+		for (short step(1); step < length; step++)
 		{
-			p_buffer_arr[i] = p_arr[i - 1];
+			p_buffer_arr[step] = p_arr[step - 1];
 		}
 		delete[] p_arr;
 		p_arr = p_buffer_arr;
@@ -138,17 +138,17 @@ public:
 	{
 		length += elem;
 		variableType* p_buffer_arr = new variableType[length];
-		for (short i(0); i < pos_start; i++)
+		for (short step(0); step < pos_start; step++)
 		{
-			p_buffer_arr[i] = p_arr[i];
+			p_buffer_arr[step] = p_arr[step];
 		}
-		for (short i(pos_start); i < pos_start+elem; i++)
+		for (short step(pos_start); step < pos_start+elem; step++)
 		{
-			p_buffer_arr[i] = value;
+			p_buffer_arr[step] = value;
 		}
-		for (short i(pos_start + elem); i < length; i++)
+		for (short step(pos_start + elem); step < length; step++)
 		{
-			p_buffer_arr[i] = p_arr[i - elem];
+			p_buffer_arr[step] = p_arr[step - elem];
 		}
 		delete[] p_arr;
 		p_arr = p_buffer_arr;
@@ -171,13 +171,13 @@ public:
 	{
 		length--;
 		variableType* p_buffer_arr = new variableType[length];
-		for (short i(0); i < pos; i++)
+		for (short step(0); step < pos; step++)
 		{
-			p_buffer_arr[i] = p_arr[i];
+			p_buffer_arr[step] = p_arr[step];
 		}
-		for (short i(pos); i < length; i++)
+		for (short step(pos); step < length; step++)
 		{
-			p_buffer_arr[i] = p_arr[i + 1];
+			p_buffer_arr[step] = p_arr[step + 1];
 		}
 		delete[] p_arr;
 		p_arr = p_buffer_arr;
@@ -194,15 +194,16 @@ public:
 	//Служит для сортировки элементов массива. Выбрана нетрудная и экономичная сортировка выбором.
 	void swap()
 	{
-		if (typeid(variableType) != typeid(char) && typeid(variableType) != typeid(bool))
+		if (typeid(variableType) != typeid(bool))
 		{
-			unsigned short M;
-			unsigned short temp;
+			unsigned int M;
+			unsigned int temp;
 			for (unsigned short i(0); i < length; i++)
 			{
 				M = i;
 				for (unsigned short j(i + 1); j < length; j++)
 				{
+					counter++;
 					if (p_arr[j] < p_arr[M])
 					{
 						M = j;
@@ -213,22 +214,25 @@ public:
 					temp = p_arr[i];
 					p_arr[i] = p_arr[M];
 					p_arr[M] = temp;
+					counter++;
 				}
 			}
 		}
 		else
 		{
 			setlocale(LC_ALL, "russian");
-			std::cout << "Метод swap не может работать с символьными типами данных.\n\a";
+			std::cout << "Метод swap не может работать с булевыми переменными.\n\a";
 		}
 	}
 
 	//Демонстрирует все элементы массива.(!!ВРЕМЕННЫЙ - ПОТОМ УДАЛИТЬ!!)
 	void show()
 	{
-		for (short i(0); i < length; i++)
+		for (short step(0); step < length; step++)
 		{
-			std::cout << p_arr[i] << " ";
+			std::cout << p_arr[step] << " ";
 		}
+		std::cout << "\nQuantity of elements = " << length << "\n";
+		std::cout << "\nCounter = " << counter << "\n";
 	}
 };
